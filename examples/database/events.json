@@ -1,0 +1,50 @@
+[
+    {
+      "id": "1",
+      "name": "Tech Conference 2025",
+      "description": "Technology and development event.",
+      "date": "2025-03-15",
+      "time": "10:00",
+      "location": "San José, Costa Rica",
+      "capacity": 200,
+      "category": "technology",
+      "price": 50.00,
+      "images": [
+        "https://example.com/banner1.jpg",
+        "https://example.com/banner2.jpg"
+      ],
+      "banner_status": true
+    },
+    {
+      "id": "2",
+      "name": "Job Fair 2025",
+      "description": "Find job opportunities with regional companies.",
+      "date": "2025-04-10",
+      "time": "09:00",
+      "location": "Panama City, Panama",
+      "capacity": 500,
+      "category": "employment",
+      "price": 0.00,
+      "images": [
+        "https://example.com/banner3.jpg",
+        "https://example.com/banner4.jpg"
+      ],
+      "banner_status": false
+    },
+    {
+      "id": "3",
+      "name": "Art Exhibition 2025",
+      "description": "Exhibition of local artists at the cultural center.",
+      "date": "2025-05-20",
+      "time": "18:00",
+      "location": "Quito, Ecuador",
+      "capacity": 150,
+      "category": "art",
+      "price": 20.00,
+      "images": [
+        "https://example.com/banner5.jpg",
+        "https://example.com/banner6.jpg"
+      ],
+      "banner_status": true
+    }
+]

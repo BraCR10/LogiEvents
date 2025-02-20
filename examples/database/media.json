@@ -1,0 +1,17 @@
+[
+  {
+    "id": "1",
+    "type": "image",
+    "url": "https://example.com/image1.jpg"
+  },
+  {
+    "id": "2",
+    "type": "video",
+    "url": "https://example.com/video1.mp4"
+  },
+  {
+    "id": "3",
+    "type": "image",
+    "url": "https://example.com/image2.jpg"
+  }
+]

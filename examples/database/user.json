@@ -1,0 +1,35 @@
+[
+    {
+      "id": "1",
+      "name": "Brian Ramirez",
+      "email": "brian@example.com",
+      "password": "hashedpassword123",
+      "id_number": "123456789",
+      "phone_number": "+50612345678",
+      "company": "Tech Corp",
+      "role": "admin",
+      "profile_picture": "https://example.com/profile1.jpg"
+    },
+    {
+      "id": "2",
+      "name": "Carlos Soto",
+      "email": "carlos@example.com",
+      "password": "hashedpassword456",
+      "id_number": "987654321",
+      "phone_number": "+50687654321",
+      "company": "Dev Solutions",
+      "role": "user",
+      "profile_picture": "https://example.com/profile2.jpg"
+    },
+    {
+      "id": "3",
+      "name": "María Pérez",
+      "email": "maria@example.com",
+      "password": "hashedpassword789",
+      "id_number": "456123789",
+      "phone_number": "+50623456789",
+      "company": "Creative Studio",
+      "role": "user",
+      "profile_picture": "https://example.com/profile3.jpg"
+    }
+]
