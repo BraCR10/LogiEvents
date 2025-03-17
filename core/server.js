@@ -3,18 +3,30 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT;
 
-mongoose.connect(process.env.DATABASE_URI, {
+// Middleware
+app.use(express.json()); 
+
+// Load routers
+const authRouter = require('./routes/auth');
+
+app.use(express.json());
+
+mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
-.then(() => console.log('Successfully connected to MongoDB'))
+.then(() => console.log('Database succesfully connected.'))
 .catch(err => console.log(err));
 
-app.use(express.json()); 
+
+app.use(`/auth`, authRouter);
+
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 }); 
 
+
+module.exports = app;
