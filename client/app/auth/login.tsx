@@ -5,12 +5,12 @@ export default function HomeScreen() {
   const router = useRouter();
 
   const goHome = () => {
-      router.push("/auth/login"); 
+      router.push("/home"); 
   };
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text style={{ fontSize: 24, marginBottom: 20 }}>Welcome to LogiEvents</Text>
-      <Button title="Try login" onPress={goHome} />
+      <Text style={{ fontSize: 24, marginBottom: 20 }}>Please login!</Text>
+      <Button title="Login" onPress={goHome} />
     </View>
   );
 }
