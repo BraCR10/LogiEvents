@@ -7,7 +7,7 @@ export default function HomeLayout() {
     <View>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ title: "Home" }} />
-        <Stack.Screen name="[id]" options={{ title: "Event Details" }} />
+        <Stack.Screen name="[eventId]" options={{ title: "Event Details" }} />
       </Stack>
     </View>
   );
