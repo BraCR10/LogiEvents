@@ -1,17 +1,35 @@
 import React from "react";
-import { Button, Text, View } from "react-native";
+import { Button, Text, View, StyleSheet } from "react-native";
 import { router } from "expo-router";
 
-const goWelcome = () => {
-    router.push("/"); 
-};
 export default function Index() {
+  const goWelcome = () => {
+      router.push("/"); 
+  };
+  
   return (
-    <View>
-        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" , marginTop: 50}}>
-            <Text style={{ fontSize: 24, marginBottom: 20, justifyContent:"center" }}>Welcome to Home</Text>
-            <Button title="Logout" onPress={goWelcome} />
-        </View>
+    <View style={styles.container}>
+      <View style={styles.welcomeContainer}>
+        <Text style={styles.title}>Welcome to Home</Text>
+        <Button title="Logout" onPress={goWelcome} />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  welcomeContainer: {
+    flex: 1, 
+    justifyContent: "center", 
+    alignItems: "center",
+    marginTop: 50
+  },
+  title: {
+    fontSize: 24, 
+    marginBottom: 20, 
+    justifyContent: "center"
+  }
+});
