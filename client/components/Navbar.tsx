@@ -9,6 +9,7 @@ import {
   useColorScheme
 } from 'react-native';
 
+//TODO use props to change content and links in nav bar
 function Navbar({ children }: PropsWithChildren)  {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
