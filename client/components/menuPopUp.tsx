@@ -16,27 +16,27 @@ type MobileMenuPopupProps = {
   onEventClick: () => void;
 };
 
-export default function MenuPopup({ visible, onClose, isLogged, onEventClick }: MobileMenuPopupProps) {
+export default function MenuPopup(props: MobileMenuPopupProps) {
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
 
   const navigateTo = (screen: string) => {
     navigation.navigate(screen);
-    onClose();
+    props.onClose();
   };
 
   return (
     <Modal
       animationType="fade"
       transparent={true}
-      visible={visible}
-      onRequestClose={onClose}
+      visible={props.visible}
+      onRequestClose={props.onClose}
     >
       <TouchableOpacity 
         style={styles.overlay} 
         activeOpacity={1} 
-        onPressOut={onClose}
+        onPressOut={props.onClose}
       >
         <TouchableOpacity 
           style={[
@@ -49,7 +49,7 @@ export default function MenuPopup({ visible, onClose, isLogged, onEventClick }: 
 
             <TouchableOpacity 
               style={styles.closeButton} 
-              onPress={onClose}
+              onPress={props.onClose}
             >
               <Text style={[styles.closeButtonText, isDarkMode ? styles.darkText : styles.lightText]}>×</Text>
             </TouchableOpacity>
@@ -58,14 +58,14 @@ export default function MenuPopup({ visible, onClose, isLogged, onEventClick }: 
 
               <TouchableOpacity 
                 style={styles.menuItem} 
-                onPress={() => isLogged ? navigateTo('home') : navigateTo('auth/register')}
+                onPress={() => props.isLogged ? navigateTo('home') : navigateTo('auth/register')}
               >
                 <Text style={[styles.menuItemText, isDarkMode ? styles.darkText : styles.lightText]}>Inicio</Text>
               </TouchableOpacity>
 
               <TouchableOpacity 
                 style={styles.menuItem} 
-                onPress={() => {onEventClick()}}
+                onPress={() => {props.onEventClick()}}
               >
                 <Text style={[styles.menuItemText, isDarkMode ? styles.darkText : styles.lightText]}>Eventos</Text>
               </TouchableOpacity>
