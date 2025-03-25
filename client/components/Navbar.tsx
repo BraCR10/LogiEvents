@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { 
   StyleSheet, 
   TouchableOpacity, 
@@ -9,24 +9,25 @@ import {
   useWindowDimensions
 } from 'react-native';
 import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
-
+import MenuPopup from './menuPopUp';  // Import the new popup component
 
 type navProps = {
   children?: React.ReactNode;
   isLogged: boolean;
-  onBtn1Click: () => void;
-  onBtn2Click: () => void;
   onEventClick: () => void;
-  onMenuClick: () => void;
 };
 
-
 function Navbar(props: navProps)  {
+  const [isMobileMenuVisible, setMobileMenuVisible] = useState(false);
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
   const navigation = useNavigation<NavigationProp<ParamListBase>>();
   const { width } = useWindowDimensions();
   const isMobile = width < 600;
+
+  const toggleMobileMenu = () => {
+    setMobileMenuVisible(!isMobileMenuVisible);
+  };
 
   return (
     <SafeAreaView style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
@@ -39,7 +40,7 @@ function Navbar(props: navProps)  {
             <TouchableOpacity>
               <Text 
                 style={[styles.navLink, isDarkMode ? styles.darkText : styles.lightText]}
-                onPress={() => navigation.navigate('auth/register')}
+                onPress={() => props.isLogged ? navigation.navigate('home') : navigation.navigate('auth/register')}
               >
                 Inicio
               </Text>
@@ -57,7 +58,7 @@ function Navbar(props: navProps)  {
             <TouchableOpacity>
               <Text 
                 style={[styles.navLink, isDarkMode ? styles.darkText : styles.lightText]}
-                onPress={() => navigation.navigate('home')}
+                onPress={() => navigation.navigate('rules')}
               >
                 Políticas
               </Text>
@@ -66,9 +67,11 @@ function Navbar(props: navProps)  {
         )}
         
         <View style={styles.btnSection}>
+          {/*TODO: CHANGE ROUTES*/}
+          
           <TouchableOpacity 
             style={[styles.btnGeneral, styles.btn1, isDarkMode ? styles.darkBtn1 : styles.lightBtn1]}
-            onPress={props.onBtn1Click}>
+            onPress={() => props.isLogged ? navigation.navigate('home/events') : navigation.navigate('auth/login')}>
             <Text style={[styles.btnSectionText, isDarkMode ? styles.darkBtn1Text : styles.lightBtn1Text]}>
               {props.isLogged ? 'Mis eventos' : 'Iniciar sesión'}
             </Text>
@@ -76,7 +79,7 @@ function Navbar(props: navProps)  {
           
           <TouchableOpacity 
             style={[styles.btnGeneral, styles.btn2, isDarkMode ? styles.darkBtn2 : styles.lightBtn2]}
-            onPress={props.onBtn2Click}
+            onPress={() => props.isLogged ? navigation.navigate('home/profile') : navigation.navigate('auth/register')}
           >
             <Text style={[styles.btnSectionText, isDarkMode ? styles.darkBtn2Text : styles.lightBtn2Text]}>
               {props.isLogged ? 'Perfil' : 'Registrarse'}
@@ -84,13 +87,20 @@ function Navbar(props: navProps)  {
           </TouchableOpacity>
         </View>
         {isMobile && (
-          <TouchableOpacity style={styles.menuButton} onPress={props.onMenuClick}>
+          <TouchableOpacity style={styles.menuButton} onPress={toggleMobileMenu}>
             <Text style={[styles.menuText, isDarkMode ? styles.darkText : styles.lightText]}>☰</Text>
           </TouchableOpacity>
         )}
       </View>
       
       {props.children}
+
+      <MenuPopup 
+        visible={isMobileMenuVisible} 
+        onClose={toggleMobileMenu} 
+        isLogged={props.isLogged} 
+        onEventClick={props.onEventClick}
+      />
     </SafeAreaView>
   );
 };
