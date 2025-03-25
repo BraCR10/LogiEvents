@@ -1,93 +1,96 @@
-import React, { PropsWithChildren, useState } from 'react';
+import React from 'react';
 import { 
   StyleSheet, 
   TouchableOpacity, 
   View, 
   Text, 
   SafeAreaView,
-  StatusBar,
-  useColorScheme
+  useColorScheme,
+  useWindowDimensions
 } from 'react-native';
+import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
 
-//TODO use props to change content and links in nav bar
-function Navbar({ children }: PropsWithChildren)  {
+
+type navProps = {
+  children?: React.ReactNode;
+  isLogged: boolean;
+  onBtn1Click: () => void;
+  onBtn2Click: () => void;
+  onEventClick: () => void;
+  onMenuClick: () => void;
+};
+
+
+function Navbar(props: navProps)  {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === 'dark';
-  
+  const navigation = useNavigation<NavigationProp<ParamListBase>>();
+  const { width } = useWindowDimensions();
+  const isMobile = width < 600;
+
   return (
-    <SafeAreaView style={[
-      styles.container, 
-      isDarkMode ? styles.darkContainer : styles.lightContainer
-    ]}>
+    <SafeAreaView style={[styles.container, isDarkMode ? styles.darkContainer : styles.lightContainer]}>
       
       <View style={styles.header}>
-        <Text style={[
-          styles.logo, 
-          isDarkMode ? styles.darkText : styles.lightText
-        ]}>
-          LogiEvents
-        </Text>
+        <Text style={[styles.logo, isDarkMode ? styles.darkText : styles.lightText]}>LogiEvents</Text>
         
-        <View style={styles.navLinks}>
-          <TouchableOpacity>
-            <Text style={[
-              styles.navLink, 
-              isDarkMode ? styles.darkText : styles.lightText
-            ]}>
-              Inicio
+        {!isMobile && (
+          <View style={styles.navLinks}>
+            <TouchableOpacity>
+              <Text 
+                style={[styles.navLink, isDarkMode ? styles.darkText : styles.lightText]}
+                onPress={() => navigation.navigate('auth/register')}
+              >
+                Inicio
+              </Text>
+            </TouchableOpacity>
+          
+            <TouchableOpacity>
+              <Text 
+                style={[styles.navLink, isDarkMode ? styles.darkText : styles.lightText]}
+                onPress={props.onEventClick}
+              >
+                Eventos
+              </Text>
+            </TouchableOpacity>
+          
+            <TouchableOpacity>
+              <Text 
+                style={[styles.navLink, isDarkMode ? styles.darkText : styles.lightText]}
+                onPress={() => navigation.navigate('home')}
+              >
+                Políticas
+              </Text>
+            </TouchableOpacity>
+          </View> 
+        )}
+        
+        <View style={styles.btnSection}>
+          <TouchableOpacity 
+            style={[styles.btnGeneral, styles.btn1, isDarkMode ? styles.darkBtn1 : styles.lightBtn1]}
+            onPress={props.onBtn1Click}>
+            <Text style={[styles.btnSectionText, isDarkMode ? styles.darkBtn1Text : styles.lightBtn1Text]}>
+              {props.isLogged ? 'Mis eventos' : 'Iniciar sesión'}
             </Text>
           </TouchableOpacity>
           
-          <TouchableOpacity>
-            <Text style={[
-              styles.navLink, 
-              isDarkMode ? styles.darkText : styles.lightText
-            ]}>
-              Eventos
-            </Text>
-          </TouchableOpacity>
-          
-          <TouchableOpacity>
-            <Text style={[
-              styles.navLink, 
-              isDarkMode ? styles.darkText : styles.lightText
-            ]}>
-              Políticas
+          <TouchableOpacity 
+            style={[styles.btnGeneral, styles.btn2, isDarkMode ? styles.darkBtn2 : styles.lightBtn2]}
+            onPress={props.onBtn2Click}
+          >
+            <Text style={[styles.btnSectionText, isDarkMode ? styles.darkBtn2Text : styles.lightBtn2Text]}>
+              {props.isLogged ? 'Perfil' : 'Registrarse'}
             </Text>
           </TouchableOpacity>
         </View>
-        
-        <View style={styles.auth}>
-          <TouchableOpacity style={[
-            styles.authButton, 
-            styles.loginButton,
-            isDarkMode ? styles.darkLoginButton : styles.lightLoginButton
-          ]}>
-            <Text style={[
-              styles.authButtonText,
-              isDarkMode ? styles.darkLoginText : styles.lightLoginText
-            ]}>
-              Inicio Sesión
-            </Text>
+        {isMobile && (
+          <TouchableOpacity style={styles.menuButton} onPress={props.onMenuClick}>
+            <Text style={[styles.menuText, isDarkMode ? styles.darkText : styles.lightText]}>☰</Text>
           </TouchableOpacity>
-          
-          <TouchableOpacity style={[
-            styles.authButton, 
-            styles.registerButton,
-            isDarkMode ? styles.darkRegisterButton : styles.lightRegisterButton
-          ]}>
-            <Text style={[
-              styles.authButtonText,
-              isDarkMode ? styles.darkRegisterText : styles.lightRegisterText
-            ]}>
-              Registro
-            </Text>
-          </TouchableOpacity>
-        </View>
-       
+        )}
       </View>
       
-      {children}
+      {props.children}
     </SafeAreaView>
   );
 };
@@ -101,7 +104,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#ffffff',
   },
   darkContainer: {
-    backgroundColor: '#1a1d21'  ,
+    backgroundColor: '#1a1d21',
   },
   header: {
     flexDirection: 'row',
@@ -112,6 +115,7 @@ const styles = StyleSheet.create({
   logo: {
     fontSize: 20,
     fontWeight: 'bold',
+    marginLeft: 10,
   },
   lightText: {
     color: '#333333',
@@ -128,62 +132,54 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontSize: 16,
   },
-  auth: {
+  btnSection: {
     flexDirection: 'row',
   },
-  authButton: {
+  btnGeneral: {
     paddingVertical: 8,
     paddingHorizontal: 16,
     borderRadius: 4,
-    marginLeft: 10,
+    marginLeft: 5,
+    maxWidth: 90,
   },
-  loginButton: {
+  btn1: {
     borderWidth: 1,
   },
-  lightLoginButton: {
+  lightBtn1: {
     borderColor: '#333333',
   },
-  darkLoginButton: {
+  darkBtn1: {
     borderColor: '#ffffff',
   },
-  registerButton: {},
-  lightRegisterButton: {
+  btn2: {
+    marginRight: 10,
+  },
+  lightBtn2: {
     backgroundColor: '#333333',
   },
-  darkRegisterButton: {
+  darkBtn2: {
     backgroundColor: '#ffffff',
   },
-  authButtonText: {
-    fontSize: 14,
+  btnSectionText: {
+    fontSize: 8,
   },
-  lightLoginText: {
+  lightBtn1Text: {
     color: '#333333',
   },
-  darkLoginText: {
+  darkBtn1Text: {
     color: '#ffffff',
   },
-  lightRegisterText: {
+  lightBtn2Text: {
     color: '#ffffff',
   },
-  darkRegisterText: {
+  darkBtn2Text: {
     color: '#333333',
   },
   menuButton: {
-    display: 'none', // Hidden by default, would use media queries in web
-    width: 24,
-    height: 24,
-    justifyContent: 'space-between',
-    paddingVertical: 4,
+    padding: 5,
   },
-  menuLine: {
-    height: 2,
-    width: '100%',
-  },
-  lightMenuLine: {
-    backgroundColor: '#333333',
-  },
-  darkMenuLine: {
-    backgroundColor: '#ffffff',
+  menuText: {
+    fontSize: 24,
   },
 });
 
