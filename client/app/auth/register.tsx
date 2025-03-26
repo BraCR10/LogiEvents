@@ -100,17 +100,17 @@ export default function Register() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row', // Divide la pantalla en dos columnas
+    flexDirection: 'row', 
   },
   leftContainer: {
-    flex: 1, // Ocupa el 50% del ancho
-    backgroundColor: '#151D20', // Fondo negro
-    justifyContent: 'flex-start', // Alinea los elementos hacia la parte superior
-    alignItems: 'center', // Centra horizontalmente
-    paddingTop: 50, // Espaciado superior
+    flex: 1, 
+    backgroundColor: '#151D20', 
+    justifyContent: 'flex-start', 
+    alignItems: 'center', 
+    paddingTop: 50, 
   },
   rightContainer: {
-    flex: 1, // Ocupa el 50% del ancho
+    flex: 1, 
   },
   image: {
     width: '100%',
@@ -132,32 +132,32 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     textAlign: 'left',
-    alignSelf: 'flex-start', // Alinea el texto a la izquierda dentro del contenedor
-    marginLeft: '10%', // Margen izquierdo para alinear con el cuadro de texto
+    alignSelf: 'flex-start', 
+    marginLeft: '10%', 
     marginBottom: 8,
   },
   input: {
-    width: '80%', // Ancho del cuadro de entrada
-    height: 40, // Altura del cuadro de entrada
-    backgroundColor: 'white', // Fondo blanco
-    borderRadius: 5, // Bordes redondeados
-    paddingHorizontal: 10, // Espaciado interno
-    fontSize: 14, // Tamaño de la fuente
-    color: 'black', // Texto negro
-    marginBottom: 16, // Espaciado inferior
+    width: '80%',
+    height: 40, 
+    backgroundColor: 'white', 
+    borderRadius: 5, 
+    paddingHorizontal: 10,
+    fontSize: 14, 
+    color: 'black', 
+    marginBottom: 16, 
   },
   row: {
-    flexDirection: 'row', // Coloca los elementos en una fila
-    justifyContent: 'space-between', // Espaciado entre los elementos
-    width: '80%', // Asegura que ocupe el mismo ancho que los inputs
-    marginBottom: 16, // Espaciado inferior
+    flexDirection: 'row', 
+    justifyContent: 'space-between', 
+    width: '80%', 
+    marginBottom: 16, 
   },
   column: {
-    flex: 1, // Cada columna ocupa el mismo espacio
-    marginHorizontal: 5, // Espaciado entre las columnas
+    flex: 1, 
+    marginHorizontal: 5, 
   },
   inputSmall: {
-    width: '100%', // Asegura que el input ocupe todo el ancho de la columna
+    width: '100%', 
     height: 40,
     backgroundColor: 'white',
     borderRadius: 5,

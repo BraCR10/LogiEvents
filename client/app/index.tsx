@@ -1,12 +1,14 @@
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import Register from './auth/register'; 
-
+/*
 export default function Header() {
-  return  <Register />;}
+  return  <Register />;
+}
+*/
 
 /*  
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
-
+*/
 
 export default function Header() {
   return (
@@ -60,4 +62,3 @@ const styles = StyleSheet.create({
     fontWeight: 'bold', 
   },
 });
-*/
