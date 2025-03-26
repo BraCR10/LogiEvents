@@ -1,43 +1,63 @@
-import { View, StyleSheet, FlatList, Text, ScrollView } from "react-native"
-import type { Event } from "../models/event"
-import EventCard from "./EventCard"
-import React from "react"
+import React from "react";
+import { View, StyleSheet, FlatList, Text, ScrollView } from "react-native";
+import type { Event } from "../models/event";
+import EventCard from "./EventCard";
 
 interface EventListProps {
-  events: Event[]
-  horizontal?: boolean
+  events: Event[];
+  horizontal?: boolean;
+  onEventPress?: (event: Event) => void;
 }
 
-const EventList = ({ events, horizontal = true }: EventListProps) => {
+function EventList({ events, horizontal = true, onEventPress }: EventListProps) {
   if (events.length === 0) {
     return (
       <View style={styles.emptyState}>
         <Text style={styles.emptyText}>No hay eventos disponibles</Text>
       </View>
-    )
+    );
   }
+
+  const handleEventPress = (event: Event) => {
+    if (onEventPress) {
+      onEventPress(event);
+    }
+  };
 
   if (horizontal) {
     return (
-      <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.horizontalContainer}>
+      <ScrollView 
+        horizontal 
+        showsHorizontalScrollIndicator={false} 
+        contentContainerStyle={styles.horizontalContainer}
+      >
         {events.map((event) => (
-          <EventCard key={event.id} event={event} />
+          <EventCard 
+            key={event.id} 
+            event={event} 
+            onPress={handleEventPress}
+          />
         ))}
       </ScrollView>
-    )
+    );
   }
 
   return (
     <FlatList
       data={events}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <EventCard event={item} />}
+      renderItem={({ item }) => (
+        <EventCard 
+          event={item} 
+          onPress={handleEventPress}
+        />
+      )}
       contentContainerStyle={styles.listContent}
       showsVerticalScrollIndicator={false}
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
     />
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -60,7 +80,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#6c757d",
   },
-})
+});
 
-export default EventList
-
+export default EventList;

@@ -1,4 +1,4 @@
-export type EventCategory = 'Ocio' | 'Cultura' | 'Deportes' | 'Tecnología' | 'Mis eventos';
+export type EventCategory = 'Entretenimiento'|'Exhibición'|'Ocio'|'Juegos' |"Gastronomía"| 'Cultura'|'Música' | 'Deportes' | 'Tecnología'| 'Educación' | 'Mis eventos';
 
 export type Event = {
   id: string;
@@ -6,4 +6,8 @@ export type Event = {
   description: string;
   image: string;
   category: EventCategory;
+  date?: string;        // Ej: "Domingo, 23 feb"
+  time?: string;        // Ej: "08:00 AM"
+  location?: string;    // Ej: "Liberia, Guanacaste"
+  availableSpots?: number; // Espacios disponibles
 };
