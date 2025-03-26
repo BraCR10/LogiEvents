@@ -7,8 +7,8 @@ const users: User[] = [
     lastname: "Apellido Apellido",
     fullname: "Nombre Apellido Apellido",
     email: "micorreo@gmail.com",
-    role: "admin",
-    studentId: "2024099161",
+    role: "user",
+    phone: "+506 8812 3456",
     createdAt: "2023-10-15T14:30:00Z",
     updatedAt: "2024-02-20T09:45:00Z"
   },
@@ -19,7 +19,7 @@ const users: User[] = [
     fullname: "Juan Pérez González",
     email: "juan.perez@gmail.com",
     role: "user",
-    studentId: "2024099162",
+    phone: "+506 8765 4321",
     createdAt: "2023-11-05T10:20:00Z",
     updatedAt: "2024-01-15T16:30:00Z"
   },
@@ -30,7 +30,7 @@ const users: User[] = [
     fullname: "María Rodríguez Vargas",
     email: "maria.rodriguez@gmail.com",
     role: "user",
-    studentId: "2024099163",
+    phone: "+506 6543 2109",
     profileImage: "https://example.com/profiles/maria.jpg",
     createdAt: "2023-12-12T08:10:00Z",
     updatedAt: "2024-03-05T11:20:00Z"
@@ -42,7 +42,7 @@ const users: User[] = [
     fullname: "Carlos Jiménez Soto",
     email: "carlos.jimenez@gmail.com",
     role: "admin",
-    studentId: "2024099164",
+    phone: "+506 7890 1234",
     createdAt: "2024-01-20T13:45:00Z",
     updatedAt: "2024-02-28T15:15:00Z"
   }
