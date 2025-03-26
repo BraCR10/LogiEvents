@@ -9,6 +9,7 @@ import {
   useWindowDimensions
 } from 'react-native';
 import { useNavigation, NavigationProp, ParamListBase } from '@react-navigation/native';
+import MenuPopup from './menuPopUp';  // Import the new popup component
 
 type navProps = {
   children?: React.ReactNode;
@@ -94,6 +95,12 @@ function Navbar(props: navProps)  {
       
       {props.children}
 
+      <MenuPopup 
+        visible={isMobileMenuVisible} 
+        onClose={toggleMobileMenu} 
+        isLogged={props.isLogged} 
+        onEventClick={props.onEventClick}
+      />
     </SafeAreaView>
   );
 };
