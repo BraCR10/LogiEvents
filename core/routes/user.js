@@ -94,5 +94,84 @@ router.post('/change-password/:id', async (req, res) => {
 });
 
 
+// Get user by ID
+router.get('/:id', requireAuth, async (req, res) => {
+
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user){
+            throw new Error('User not found');
+        }
+
+        res.status(200).json(user);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+// Get all users
+router.get('/', requireAuth, async (req, res) => {
+
+    try {
+        const users = await User.find();
+
+        res.status(200).json(users);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+
+// Update user information
+router.patch('/:id', requireAuth, async (req, res) => {
+
+    try {
+        const user = await User.findById(req.params.id);
+
+        if (!user){
+            throw new Error('User not found');
+        }
+
+        const check = ['firstName', 'lastName', 'email', 'phoneNumber'];
+        bodyHandler(check, req.body);
+
+        const { firstName, lastName, email, phoneNumber } = req.body;
+
+        user.firstName = firstName;
+        user.lastName = lastName;
+        user.email = email;
+        user.phoneNumber = phoneNumber;
+
+        await user.save();
+
+        res.status(200).json(user);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
+});
+
+// Delete user
+router.delete('/:id', requireAuth, async (req, res) => {
+    
+        try {
+            const user = await User.findById(req.params.id);
+    
+            if (!user){
+                throw new Error('User not found');
+            }
+    
+            await user.remove();
+    
+            res.status(200).send('User deleted');
+        }
+        catch (error) {
+            res.status(400).send(error.message);
+        }
+    }
+);
 
 module.exports = router;
