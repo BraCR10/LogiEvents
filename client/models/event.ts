@@ -1,4 +1,4 @@
-export type EventCategory = 'Ocio' | 'Cultura' | 'Deportes' | 'Tecnología';
+export type EventCategory = 'Ocio' | 'Cultura' | 'Deportes' | 'Tecnología' | 'Mis eventos';
 
 export type Event = {
   id: string;
