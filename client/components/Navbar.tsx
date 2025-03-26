@@ -8,7 +8,7 @@ import {
   useColorScheme,
   useWindowDimensions
 } from 'react-native';
-import { useRouter } from 'expo-router'; // Changed to expo-router
+import { useRouter } from 'expo-router';
 import MenuPopup from './menuPopUp';
 
 type navProps = {
