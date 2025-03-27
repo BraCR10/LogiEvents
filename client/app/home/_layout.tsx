@@ -6,7 +6,7 @@ import Navbar from "@/components/Navbar";
 export default function HomeLayout() {
   return (
     <View style={styles.container}>
-      <Navbar isLogged={true} onEventClick={() => {}} />
+      <Navbar isLogged={true} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ title: "Home" }} />
         <Stack.Screen name="events/[eventId]" options={{ title: "Event Details" }} />

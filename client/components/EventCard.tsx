@@ -6,9 +6,10 @@ import type { Event } from "../models/event";
 interface EventCardProps {
   event: Event;
   onPress?: (event: Event) => void;
+  compact?: boolean; // Add compact prop support
 }
 
-function EventCard({ event, onPress }: EventCardProps) {
+function EventCard({ event, onPress, compact = false }: EventCardProps) {
   const handlePress = () => {
     if (onPress) {
       onPress(event);
@@ -17,26 +18,31 @@ function EventCard({ event, onPress }: EventCardProps) {
 
   const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
   
+  const containerStyle = compact ? styles.compactContainer : styles.container;
+  const contentStyle = compact ? styles.compactCardContent : styles.cardContent;
+  const imageStyle = compact ? styles.compactImage : styles.image;
+  const titleStyle = compact ? styles.compactTitle : styles.title;
+  
   return (
     <TouchableOpacity 
-      style={styles.container} 
+      style={containerStyle} 
       onPress={handlePress}
       activeOpacity={0.7}
     >
-      <View style={styles.cardContent}>
+      <View style={contentStyle}>
         
         {(event.date || event.time) && (
           <View style={styles.dateTimeContainer}>
             {event.date && (
               <View style={styles.dateRow}>
-                <Ionicons name="calendar-outline" size={14} color="#6c757d" />
-                <Text style={styles.dateText}>{event.date}</Text>
+                <Ionicons name="calendar-outline" size={compact ? 12 : 14} color="#6c757d" />
+                <Text style={compact ? styles.compactDateText : styles.dateText}>{event.date}</Text>
               </View>
             )}
             {event.time && (
               <View style={styles.timeRow}>
-                <Ionicons name="time-outline" size={14} color="#6c757d" />
-                <Text style={styles.timeText}>{event.time}</Text>
+                <Ionicons name="time-outline" size={compact ? 12 : 14} color="#6c757d" />
+                <Text style={compact ? styles.compactTimeText : styles.timeText}>{event.time}</Text>
               </View>
             )}
           </View>
@@ -44,26 +50,29 @@ function EventCard({ event, onPress }: EventCardProps) {
         
         <Image
           source={{ uri: event.image }}
-          style={styles.image}
+          style={imageStyle}
           defaultSource={defaultImage}
         />
         
         <View style={styles.infoContainer}>
-          <Text style={styles.title} numberOfLines={1}>
+          <Text style={titleStyle} numberOfLines={1}>
             {event.title}
           </Text>
           
           {event.location && (
             <View style={styles.locationRow}>
-              <Ionicons name="location-outline" size={14} color="#6c757d" />
-              <Text style={styles.locationText} numberOfLines={1}>
+              <Ionicons name="location-outline" size={compact ? 12 : 14} color="#6c757d" />
+              <Text 
+                style={compact ? styles.compactLocationText : styles.locationText} 
+                numberOfLines={1}
+              >
                 {event.location}
               </Text>
             </View>
           )}
           
           {event.availableSpots !== undefined && (
-            <Text style={styles.availableSpotsText}>
+            <Text style={compact ? styles.compactAvailableSpotsText : styles.availableSpotsText}>
               ¡Quedan solo {event.availableSpots} espacios disponibles!
             </Text>
           )}
@@ -74,6 +83,7 @@ function EventCard({ event, onPress }: EventCardProps) {
 }
 
 const styles = StyleSheet.create({
+  // Regular card styles
   container: {
     backgroundColor: "#D9D9D9", 
     borderRadius: 15,
@@ -147,6 +157,61 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: "500",
     marginTop: 4,
+    color: "#333",
+  },
+  
+  // Compact card styles
+  compactContainer: {
+    backgroundColor: "#D9D9D9", 
+    borderRadius: 12,
+    overflow: "hidden",
+    marginBottom: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 3,
+    width: "100%",
+    height: 250,
+  },
+  compactCardContent: {
+    padding: 8,
+    flex: 1,
+  },
+  compactDateText: {
+    color: "#333",
+    fontSize: 10,
+    fontWeight: "500",
+    marginLeft: 3,
+  },
+  compactTimeText: {
+    color: "#333",
+    fontSize: 10,
+    fontWeight: "500",
+    marginLeft: 3,
+  },
+  compactImage: {
+    width: "100%",
+    height: 110,
+    resizeMode: "cover",
+    borderRadius: 6,
+  },
+  compactTitle: {
+    fontSize: 14,
+    fontWeight: "700",
+    marginBottom: 6,
+    textTransform: "uppercase",
+    color: "#333",
+  },
+  compactLocationText: {
+    fontSize: 12,
+    marginLeft: 3,
+    color: "#333",
+  },
+  compactAvailableSpotsText: {
+    fontSize: 10,
+    fontWeight: "500",
+    marginTop: 3,
     color: "#333",
   }
 });
