@@ -16,7 +16,7 @@ function EventCard({ event, onPress, compact = false }: EventCardProps) {
     }
   };
 
-  const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
+  const defaultImage = { uri: " https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
   
   const containerStyle = compact ? styles.compactContainer : styles.container;
   const contentStyle = compact ? styles.compactCardContent : styles.cardContent;
