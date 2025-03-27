@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
+import React from "react";
 
 export default function Register() {
   return (
@@ -20,7 +21,7 @@ export default function Register() {
         {/* Campos: Nombre y Apellido */}
         <View style={styles.row}>
           <View style={styles.column}>
-            <Text style={styles.label}>Nombre</Text>
+            <Text style={styles.label2}>Nombre</Text>
             <TextInput
               style={styles.inputSmall}
               placeholder="First Name"
@@ -29,7 +30,7 @@ export default function Register() {
             />
           </View>
           <View style={styles.column}>
-            <Text style={styles.label}>Apellido</Text>
+            <Text style={styles.label3}>Apellido</Text>
             <TextInput
               style={styles.inputSmall}
               placeholder="Last Name"
@@ -58,24 +59,15 @@ export default function Register() {
           secureTextEntry={true}
         />
 
-        {/* Campos: Rol empresa e Id empresa */}
+        {/* Campos: Numero */}
         <View style={styles.row}>
           <View style={styles.column}>
-            <Text style={styles.label}>Rol empresa</Text>
+            <Text style={styles.label4}>Número</Text>
             <TextInput
               style={styles.inputSmall}
-              placeholder="Marketing"
+              placeholder="+506 8888 8888"
               placeholderTextColor="#A9A9A9"
-              keyboardType="default"
-            />
-          </View>
-          <View style={styles.column}>
-            <Text style={styles.label}>Id empresa</Text>
-            <TextInput
-              style={styles.inputSmall}
-              placeholder="LD2345"
-              placeholderTextColor="#A9A9A9"
-              keyboardType="default"
+              keyboardType="numeric"
             />
           </View>
         </View>
@@ -88,7 +80,7 @@ export default function Register() {
       {/* Mitad derecha: Imagen */}
       <View style={styles.rightContainer}>
         <ImageBackground
-          source={require('@/assets/images/fondo_register.png')}
+          source={require('@/assets/images/fondo_register.webp')}
           style={styles.image}
           resizeMode="cover"
         />
@@ -136,6 +128,40 @@ const styles = StyleSheet.create({
     marginLeft: '10%', 
     marginBottom: 8,
   },
+  label2: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    marginLeft: '1%',
+    marginBottom: 8,
+  },
+  label3: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    marginLeft: '1%',
+    marginBottom: 8,
+  },
+
+  label4: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    marginLeft: '1%',
+    marginBottom: 8,
+  },
+  label5: {
+    color: 'white',
+    fontSize: 16,
+    textAlign: 'left',
+    alignSelf: 'flex-start',
+    marginLeft: '1%',
+    marginBottom: 8,
+  },
+  
   input: {
     width: '80%',
     height: 40, 
