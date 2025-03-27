@@ -24,6 +24,7 @@ export default function MyEventsScreen() {
   const { width } = useWindowDimensions();
   const [isMobile, setIsMobile] = useState(false);
   const [numColumns, setNumColumns] = useState(2);
+  const [isCompactView, setIsCompactView] = useState(false);
   
   const { user } = useUser();
   const {
@@ -44,6 +45,7 @@ export default function MyEventsScreen() {
     const isMobileView = width < 768;
     setIsMobile(isMobileView);
     
+    // Set number of columns based on screen width
     if (width > 1400) {
       setNumColumns(8);
     } else if (width > 1100) {
@@ -53,6 +55,9 @@ export default function MyEventsScreen() {
     } else {
       setNumColumns(2);
     }
+    
+    // Set compact view based purely on screen width
+    setIsCompactView(width < 600);
   }, [width]);
 
   const handleEventPress = (event: Event) => {
@@ -62,9 +67,11 @@ export default function MyEventsScreen() {
   const handleExploreEvents = () => {
     router.replace("/home");
   };
+  
   const handleBack = () => {
     router.back();
   };
+  
   const handleSearch = (text: string) => {
     setSearchQuery(text);
     searchEvents(text);
@@ -80,7 +87,7 @@ export default function MyEventsScreen() {
       <EventCard 
         event={item} 
         onPress={() => handleEventPress(item)}
-        compact={numColumns === 2}
+        compact={isCompactView}
       />
     </View>
   );
@@ -103,8 +110,8 @@ export default function MyEventsScreen() {
     <SafeAreaView style={styles.container}>
       <ScrollbarStyles />
       <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
-          </TouchableOpacity>
+        <Ionicons name="arrow-back" size={24} color="#000" />
+      </TouchableOpacity>
       <View style={styles.contentContainer}>
         {isMobile ? (
           <View style={styles.headerMobile}>
@@ -172,7 +179,7 @@ export default function MyEventsScreen() {
                 renderItem={renderEventItem}
                 keyExtractor={(item) => item.id}
                 numColumns={numColumns}
-                key={numColumns.toString()}
+                key={`grid-${numColumns}`}
                 contentContainerStyle={styles.gridContainer}
                 showsVerticalScrollIndicator={true}
                 indicatorStyle="black"
@@ -187,7 +194,6 @@ export default function MyEventsScreen() {
           )}
         </View>
       </View>
-      
     </SafeAreaView>
   );
 }
@@ -267,10 +273,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 0,
     width: '100%',
+    alignSelf: 'stretch',
   },
   columnWrapper: {
     justifyContent: "flex-start",
     marginBottom: 2,
+    flexWrap: 'wrap',
+    width: '100%',
   },
   loadingContainer: {
     flex: 1,

@@ -7,8 +7,7 @@ import {
   TouchableOpacity, 
   useWindowDimensions, 
   ActivityIndicator,
-  FlatList,
-  Platform
+  FlatList
 } from "react-native";
 import { RelativePathString, useRouter } from "expo-router";
 import ProfileCard from "@/components/ProfileCard";
@@ -29,6 +28,7 @@ function HomeScreen() {
   const [userRole, setUserRole] = useState<userRole>("user");
   const [isMobile, setIsMobile] = useState(false);
   const [numColumns, setNumColumns] = useState(2);
+  const [isCompactView, setIsCompactView] = useState(false);
   const [categories, setCategories] = useState<EventCategory[]>([]);
   
   const {
@@ -50,10 +50,14 @@ function HomeScreen() {
     const isMobileView = width < 768;
     setIsMobile(isMobileView);
     
+    // Set number of columns based on screen width
     if (width > 1400) setNumColumns(8);
     else if (width > 1100) setNumColumns(6);
     else if (width > 850) setNumColumns(4);
     else setNumColumns(2);
+    
+    // Set compact view based purely on screen width
+    setIsCompactView(width < 600);
   }, [width]);
   
   useEffect(() => {
@@ -100,7 +104,7 @@ function HomeScreen() {
     else loadAvailableEvents();
   };
 
-  // Render events in grid
+  // Render events in grid - updated to depend only on screen size
   const renderEventItem = ({ item }: { item: Event }) => (
     <View 
       style={{
@@ -111,7 +115,7 @@ function HomeScreen() {
       <EventCard 
         event={item} 
         onPress={() => handleEventPress(item)}
-        compact={numColumns === 2 && Platform.OS !== 'web'}
+        compact={isCompactView}
       />
     </View>
   );
@@ -178,7 +182,7 @@ function HomeScreen() {
             renderItem={renderEventItem}
             keyExtractor={(item) => item.id}
             numColumns={numColumns}
-            key={numColumns.toString()}
+            key={`grid-${numColumns}`}
             contentContainerStyle={styles.gridContainer}
             showsVerticalScrollIndicator={true}
             indicatorStyle="black"
@@ -322,10 +326,13 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     paddingHorizontal: 0,
     width: '100%',
+    alignSelf: 'stretch',
   },
   columnWrapper: {
     justifyContent: "flex-start",
     marginBottom: 2,
+    flexWrap: 'wrap',
+    width: '100%',
   },
   categoryTitle: {
     fontSize: 18,
