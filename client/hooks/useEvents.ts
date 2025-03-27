@@ -14,8 +14,8 @@ export function useEvents(initialCategory?: EventCategory) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Load all events
-  const loadUserEvents = useCallback(async () => {
+  // Load available events
+  const loadAvailableEvents = useCallback(async () => {
     setLoading(true);
     setError(null);
     
@@ -36,8 +36,8 @@ export function useEvents(initialCategory?: EventCategory) {
     }
   }, [selectedCategory]);
 
-  // Load admin events
-  const loadAdminEvents = useCallback(async () => {
+  // Load user events
+  const loadUserEvents = useCallback(async () => {
     setLoading(true);
     setError(null);
     
@@ -162,8 +162,8 @@ export function useEvents(initialCategory?: EventCategory) {
   }, [events]);
 
   useEffect(() => {
-    loadUserEvents();
-  }, [loadUserEvents]);
+    loadAvailableEvents();
+  }, [loadAvailableEvents]);
 
   return {
     events,
@@ -174,8 +174,8 @@ export function useEvents(initialCategory?: EventCategory) {
     searchQuery,
     changeCategory,
     searchEvents,
+    loadAvailableEvents,
     loadUserEvents,
-    loadAdminEvents,
     createEvent,
     updateEvent,
     deleteEvent,
