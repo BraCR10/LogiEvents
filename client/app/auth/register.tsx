@@ -4,12 +4,10 @@ import React from "react";
 export default function Register() {
   return (
     <View style={styles.container}>
-      {/* Mitad izquierda: Fondo negro con texto */}
       <View style={styles.leftContainer}>
         <Text style={styles.title}>LogiEvents</Text>
         <Text style={styles.subtitle}>Creemos experiencias juntos</Text>
 
-        {/* Campo: Correo electrónico */}
         <Text style={styles.label}>Correo electrónico</Text>
         <TextInput
           style={styles.input}
@@ -18,7 +16,6 @@ export default function Register() {
           keyboardType="email-address"
         />
 
-        {/* Campos: Nombre y Apellido */}
         <View style={styles.row}>
           <View style={styles.column}>
             <Text style={styles.label2}>Nombre</Text>
@@ -40,7 +37,6 @@ export default function Register() {
           </View>
         </View>
 
-        {/* Campo: Identificación */}
         <Text style={styles.label}>Identificación</Text>
         <TextInput
           style={styles.input}
@@ -49,7 +45,6 @@ export default function Register() {
           keyboardType="numeric"
         />
 
-        {/* Campo: Contraseña */}
         <Text style={styles.label}>Contraseña</Text>
         <TextInput
           style={styles.input}
@@ -59,7 +54,6 @@ export default function Register() {
           secureTextEntry={true}
         />
 
-        {/* Campos: Numero */}
         <View style={styles.row}>
           <View style={styles.column}>
             <Text style={styles.label4}>Número</Text>
@@ -77,7 +71,6 @@ export default function Register() {
         </TouchableOpacity>
       </View>
 
-      {/* Mitad derecha: Imagen */}
       <View style={styles.rightContainer}>
         <ImageBackground
           source={require('@/assets/images/fondo_register.webp')}
