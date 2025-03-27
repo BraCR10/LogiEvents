@@ -16,20 +16,26 @@ import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "@/hooks/useUser";
 import RoleIndicator from "@/components/RoleIndicator";
-export default function ProfileScreen() {
-  const router = useRouter();
-  const { user, loading, error, updateProfile, logout } = useUser();
-  const { width } = useWindowDimensions();
-  const isMobile = width < 768;
-  const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
 
+export default function ProfileScreen() {
+  // Hooks
+  const router = useRouter();
+  const { width } = useWindowDimensions();
+  const { user, loading, error, updateProfile, logout } = useUser();
+  
+  // State
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
+  
+  // Derived values
+  const isMobile = width < 768;
+  const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
 
+  // Load user data on component mount
   useEffect(() => {
     if (user) {
       setName(user.name || "");
@@ -39,23 +45,22 @@ export default function ProfileScreen() {
     }
   }, [user]);
 
-  const handleBack = () => {
-    router.back();
-  };
+  // Event handlers
+  const handleBack = () => router.back();
 
   const handleEditToggle = () => {
-    if (isEditing) {
-      if (user) {
-        setName(user.name || "");
-        setLastname(user.lastname || "");
-        setEmail(user.email || "");
-        setPhone(user.phone || "");
-      }
+    if (isEditing && user) {
+      // Reset form if canceling edit
+      setName(user.name || "");
+      setLastname(user.lastname || "");
+      setEmail(user.email || "");
+      setPhone(user.phone || "");
     }
     setIsEditing(!isEditing);
   };
 
   const handleSave = async () => {
+    // Validate required fields
     if (!name || !lastname || !email) {
       Alert.alert("Error", "Please complete all required fields");
       return;
@@ -94,6 +99,117 @@ export default function ProfileScreen() {
     }
   };
 
+  const handleChangePassword = () => {
+    Alert.alert("TODO", "Change Password feature will be implemented later");
+  };
+
+  // Render functions
+  const renderHeader = () => (
+    <View style={styles.header}>
+      <TouchableOpacity onPress={handleBack} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="#000" />
+      </TouchableOpacity>
+      <Text style={styles.title}>Perfil</Text>
+      <View style={styles.spacer} />
+    </View>
+  );
+
+  const renderProfileSection = () => (
+    <View style={styles.profileSection}>
+      <View style={styles.avatarContainer}>
+        <Image
+          source={user?.profileImage ? { uri: user.profileImage } : defaultImage}
+          style={{ width: 80, height: 80, borderRadius: 40 }}
+        />
+      </View>
+      <View style={styles.userInfo}>
+        <Text style={styles.userName}>{name} {lastname}</Text>
+        <Text style={styles.userEmail}>{email}</Text>
+        {phone ? <Text style={styles.userPhone}>{phone}</Text> : null}
+      </View>
+    </View>
+  );
+
+  const renderFormField = (label: string, value: string, setter: (text: string) => void, placeholder: string, keyboardType?: "email-address" | "phone-pad", autoCapitalize?: "none") => (
+    <View style={styles.formField}>
+      <Text style={styles.fieldLabel}>{label}</Text>
+      <TextInput
+        style={[styles.input, !isEditing ? styles.disabledInput : null]}
+        value={value}
+        onChangeText={setter}
+        placeholder={placeholder}
+        keyboardType={keyboardType}
+        autoCapitalize={autoCapitalize}
+        editable={isEditing}
+      />
+    </View>
+  );
+
+  const renderForm = () => (
+    <View style={styles.formContainer}>
+      {renderFormField("Nombre", name, setName, "First Name")}
+      {renderFormField("Apellidos", lastname, setLastname, "Last Name")}
+      {renderFormField("Correo", email, setEmail, "Email", "email-address", "none")}
+      {renderFormField("Telefono", phone, setPhone, "Phone Number", "phone-pad")}
+    </View>
+  );
+
+  const renderEditingActions = () => (
+    <>
+      <TouchableOpacity 
+        style={[styles.actionButton, styles.saveButton]} 
+        onPress={handleSave}
+        disabled={isSaving}
+      >
+        {isSaving ? (
+          <ActivityIndicator size="small" color="#fff" />
+        ) : (
+          <Text style={styles.saveButtonText}>Guardar</Text>
+        )}
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        style={[styles.actionButton, styles.cancelButton]} 
+        onPress={handleEditToggle}
+        disabled={isSaving}
+      >
+        <Text style={styles.cancelButtonText}>Cancelar</Text>
+      </TouchableOpacity>
+    </>
+  );
+
+  const renderViewingActions = () => (
+    <>
+      <TouchableOpacity 
+        style={[styles.actionButton, styles.editButton]} 
+        onPress={handleEditToggle}
+      >
+        <Text style={styles.editButtonText}>Editar Perfil</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity 
+        style={[styles.actionButton, styles.changePasswordButton]} 
+        onPress={handleChangePassword}
+      >
+        <Text style={styles.changePasswordButtonText}>Cambiar Contraseña</Text>
+      </TouchableOpacity>
+    </>
+  );
+
+  const renderActions = () => (
+    <View style={styles.actionsContainer}>
+      {isEditing ? renderEditingActions() : renderViewingActions()}
+
+      <TouchableOpacity 
+        style={[styles.actionButton, styles.logoutButton]} 
+        onPress={handleLogout}
+      >
+        <Text style={styles.logoutButtonText}>Cerrar Sesion</Text>
+      </TouchableOpacity>
+    </View>
+  );
+
+  // Loading state
   if (loading && !user) {
     return (
       <SafeAreaView style={styles.loadingContainer}>
@@ -103,6 +219,7 @@ export default function ProfileScreen() {
     );
   }
 
+  // Error state
   if (error && !user) {
     return (
       <SafeAreaView style={styles.errorContainer}>
@@ -114,6 +231,7 @@ export default function ProfileScreen() {
     );
   }
 
+  // Main content
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView 
@@ -123,128 +241,11 @@ export default function ProfileScreen() {
           !isMobile ? styles.webContentContainer : null
         ]}
       >
-        <View style={styles.header}>
-          <TouchableOpacity onPress={handleBack} style={styles.backButton}>
-            <Ionicons name="arrow-back" size={24} color="#000" />
-          </TouchableOpacity>
-          <Text style={styles.title}>Perfil</Text>
-          <View style={styles.spacer} />
-        </View>
-
+        {renderHeader()}
         {user ? <RoleIndicator role={user.role} /> : null}
-
-        <View style={styles.profileSection}>
-          <View style={styles.avatarContainer}>
-            <Image
-              source={user?.profileImage ? { uri: user.profileImage } : defaultImage}
-              style={{ width: 80, height: 80, borderRadius: 40 }}
-              />
-          </View>
-          <View style={styles.userInfo}>
-            <Text style={styles.userName}>{name} {lastname}</Text>
-            <Text style={styles.userEmail}>{email}</Text>
-            {phone ? <Text style={styles.userPhone}>{phone}</Text> : null}
-          </View>
-        </View>
-
-        <View style={styles.formContainer}>
-          <View style={styles.formField}>
-            <Text style={styles.fieldLabel}>Nombre</Text>
-            <TextInput
-              style={[styles.input, !isEditing ? styles.disabledInput : null]}
-              value={name}
-              onChangeText={setName}
-              placeholder="First Name"
-              editable={isEditing}
-            />
-          </View>
-
-          <View style={styles.formField}>
-            <Text style={styles.fieldLabel}>Apellidos</Text>
-            <TextInput
-              style={[styles.input, !isEditing ? styles.disabledInput : null]}
-              value={lastname}
-              onChangeText={setLastname}
-              placeholder="Last Name"
-              editable={isEditing}
-            />
-          </View>
-
-          <View style={styles.formField}>
-            <Text style={styles.fieldLabel}>Correo </Text>
-            <TextInput
-              style={[styles.input, !isEditing ? styles.disabledInput : null]}
-              value={email}
-              onChangeText={setEmail}
-              placeholder="Email"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              editable={isEditing}
-            />
-          </View>
-
-          <View style={styles.formField}>
-            <Text style={styles.fieldLabel}>Telefono</Text>
-            <TextInput
-              style={[styles.input, !isEditing ? styles.disabledInput : null]}
-              value={phone}
-              onChangeText={setPhone}
-              placeholder="Phone Number"
-              keyboardType="phone-pad"
-              editable={isEditing}
-            />
-          </View>
-        </View>
-
-        <View style={styles.actionsContainer}>
-          {isEditing ? (
-            <>
-              <TouchableOpacity 
-                style={[styles.actionButton, styles.saveButton]} 
-                onPress={handleSave}
-                disabled={isSaving}
-              >
-                {isSaving ? (
-                  <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                  <Text style={styles.saveButtonText}>Guardar</Text>
-                )}
-              </TouchableOpacity>
-
-              <TouchableOpacity 
-                style={[styles.actionButton, styles.cancelButton]} 
-                onPress={handleEditToggle}
-                disabled={isSaving}
-              >
-                <Text style={styles.cancelButtonText}>Cancelar</Text>
-              </TouchableOpacity>
-            </>
-          ) : (
-            <>
-              <TouchableOpacity 
-                style={[styles.actionButton, styles.editButton]} 
-                onPress={handleEditToggle}
-              >
-                <Text style={styles.editButtonText}>Editar Perfil</Text>
-              </TouchableOpacity>
-
-              {/* TODO: Implement Change Password integration */}
-              <TouchableOpacity 
-                style={[styles.actionButton, styles.changePasswordButton]} 
-                onPress={() => Alert.alert("TODO", "Change Password feature will be implemented later")}
-              >
-                <Text style={styles.changePasswordButtonText}>Cambiar Contraseña</Text>
-              </TouchableOpacity>
-            </>
-          )}
-
-          <TouchableOpacity 
-            style={[styles.actionButton, styles.logoutButton]} 
-            onPress={handleLogout}
-          >
-            <Text style={styles.logoutButtonText}>Cerrar Sesion</Text>
-          </TouchableOpacity>
-        </View>
+        {renderProfileSection()}
+        {renderForm()}
+        {renderActions()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -300,11 +301,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 20,
-  },
-  avatarText: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#212529',
   },
   userInfo: {
     flex: 1,
