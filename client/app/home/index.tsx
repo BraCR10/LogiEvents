@@ -100,7 +100,7 @@ function HomeScreen() {
     else loadAvailableEvents();
   };
 
-  // Render events in grid
+  // Render events in grid - updated to exactly match myEvents implementation
   const renderEventItem = ({ item }: { item: Event }) => (
     <View 
       style={{
@@ -111,7 +111,7 @@ function HomeScreen() {
       <EventCard 
         event={item} 
         onPress={() => handleEventPress(item)}
-        compact={numColumns === 2 && Platform.OS !== 'web'}
+        compact={numColumns === 2}
       />
     </View>
   );
