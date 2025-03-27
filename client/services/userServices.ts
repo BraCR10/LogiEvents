@@ -7,7 +7,7 @@ const USE_MOCK = true;
 const userService = {
   getCurrentUser: async (): Promise<User | null> => {
     if (USE_MOCK) {
-      return Promise.resolve(users[2]);
+      return Promise.resolve(users[0]);
     }
     
     // TODO: Implement real API call
@@ -41,7 +41,7 @@ const userService = {
       const updatedUser: User = {
         ...users[0],
         ...userData,
-        updatedAt: new Date().toISOString()
+        updatedAt: new Date().toString()
       };
       return Promise.resolve(updatedUser);
     }

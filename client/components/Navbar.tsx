@@ -69,7 +69,7 @@ function Navbar(props: navProps)  {
         <View style={styles.btnSection}>
           <TouchableOpacity 
             style={[styles.btnGeneral, styles.btn1, isDarkMode ? styles.darkBtn1 : styles.lightBtn1]}
-            onPress={() => props.isLogged ? router.push("/home/events") : router.push("/auth/login")}>
+            onPress={() => props.isLogged ? router.push("/home/events/myEvents") : router.push("/auth/login")}>
             <Text style={[styles.btnSectionText, isDarkMode ? styles.darkBtn1Text : styles.lightBtn1Text]}>
               {props.isLogged ? 'Mis eventos' : 'Iniciar sesión'}
             </Text>
