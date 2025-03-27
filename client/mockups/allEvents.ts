@@ -279,4 +279,4 @@ const allEvents: Event[] = [
   }
 ];
 
-export default allEvents;
+export default allEvents

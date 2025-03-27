@@ -13,7 +13,6 @@ import { useRouter } from "expo-router";
 import ProfileCard from "@/components/ProfileCard";
 import SearchBar from "@/components/SearchBar";
 import EventCard from "@/components/EventCard";
-import ChatBotButton from "@/components/ChatBotButton";
 import ScrollbarStyles from "@/components/ScrollbarStyles";
 import { useUser } from "@/hooks/useUser";
 import { useEvents } from "@/hooks/useEvents";
@@ -189,7 +188,6 @@ export default function MyEventsScreen() {
         </View>
       </View>
       
-      <ChatBotButton />
     </SafeAreaView>
   );
 }
