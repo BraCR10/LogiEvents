@@ -8,11 +8,14 @@ import EventList from "@/components/EventList";
 import type { EventCategory, Event } from "@/models/event";
 import type { userRole } from "@/models/user";
 import { useEvents } from "@/hooks/useEvents"; 
+import { useUser } from "@/hooks/useUser";
 
 function HomeScreen() {
   const router = useRouter();
-  //TODO: Implement userRole state
-  const [userRole] = useState<userRole>("user"); 
+  
+  const { user, loading : loadingUser, error:errorUser} = useUser();
+
+  const [userRole,setUserRole] = useState<userRole>("user"); 
   const { width } = useWindowDimensions();
   const [isMobile, setIsMobile] = useState(false);
   
@@ -33,12 +36,14 @@ function HomeScreen() {
   const [categories, setCategories] = useState<EventCategory[]>([]);
   
   useEffect(() => {
-    if (userRole === "admin") {
+    if (user?.role === "admin") {
+      setUserRole("admin");
       loadAdminEvents();
     } else {
+      setUserRole("user");
       loadUserEvents();
     }
-  }, [userRole, loadUserEvents, loadAdminEvents]);
+  }, [user, loadUserEvents, loadAdminEvents]);
   
   useEffect(() => {
     const fetchCategories = () => {
@@ -119,8 +124,9 @@ function HomeScreen() {
             <View>
               <View style={styles.header}>
                 <ProfileCard 
-                  name="Nombre Apellido Apellido" 
-                  role="2024099161" 
+                  name={user ? `${user.name} ${user.lastname}`.toUpperCase() : ""}
+                  role={user ? user.role : ""}
+                  avatar={user?.profileImage}
                   profileStyles={profileStyles} 
                 />
               </View>
@@ -138,8 +144,9 @@ function HomeScreen() {
             // Desktop
             <View style={styles.header}>
               <ProfileCard 
-                name="Nombre Apellido Apellido" 
-                role="2024099161" 
+                 name={user ? `${user.name} ${user.lastname}`.toUpperCase() : ""}
+                 role={user ? user.role : ""}
+                 avatar={user?.profileImage}
                 profileStyles={profileStyles} 
               />
               <View style={styles.searchWrapper}>
@@ -193,8 +200,9 @@ function HomeScreen() {
           <View>
             <View style={styles.header}>
               <ProfileCard 
-                name="Nombre Apellido Apellido" 
-                role="2024099161" 
+                name={user ? `${user.name} ${user.lastname}`.toUpperCase() : ""}
+                role={user ? user.role : ""}
+                avatar={user?.profileImage}
                 profileStyles={profileStyles} 
               />
             </View>
@@ -212,8 +220,9 @@ function HomeScreen() {
           // Desktop 
           <View style={styles.header}>
             <ProfileCard 
-              name="Nombre Apellido Apellido" 
-              role="2024099161" 
+              name={user ? `${user.name} ${user.lastname}`.toUpperCase() : ""}
+              role={user ? user.role : ""}
+              avatar={user?.profileImage}
               profileStyles={profileStyles} 
             />
             <View style={styles.searchWrapper}>

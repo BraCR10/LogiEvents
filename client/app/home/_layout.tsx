@@ -9,9 +9,9 @@ export default function HomeLayout() {
       <Navbar isLogged={true} onEventClick={() => {}} />
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" options={{ title: "Home" }} />
-        <Stack.Screen name="events" options={{ title: "Events" }} />
         <Stack.Screen name="events/[eventId]" options={{ title: "Event Details" }} />
         <Stack.Screen name="profile" options={{ title: "Profile" }} />
+        <Stack.Screen name="events/myEvents" options={{ title: "My Events" }} />
       </Stack>
     </View>
   );

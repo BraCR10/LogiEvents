@@ -14,6 +14,7 @@ export function useEvents(initialCategory?: EventCategory) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
+  // Load all events
   const loadUserEvents = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -35,6 +36,7 @@ export function useEvents(initialCategory?: EventCategory) {
     }
   }, [selectedCategory]);
 
+  // Load admin events
   const loadAdminEvents = useCallback(async () => {
     setLoading(true);
     setError(null);
@@ -51,11 +53,13 @@ export function useEvents(initialCategory?: EventCategory) {
     }
   }, []);
 
+  // Change category filter
   const changeCategory = useCallback((category: EventCategory) => {
     setSelectedCategory(category);
     setFilteredEvents(events.filter(event => event.category === category));
   }, [events]);
 
+  // Search events by title or description
   const searchEvents = useCallback((query: string) => {
     setSearchQuery(query);
     
@@ -67,7 +71,7 @@ export function useEvents(initialCategory?: EventCategory) {
       }
       return;
     }
-    
+    // Filter events by query and category
     const filtered = events.filter(event => {
       const matchesQuery = 
         event.title.toLowerCase().includes(query.toLowerCase()) ||
@@ -83,6 +87,7 @@ export function useEvents(initialCategory?: EventCategory) {
     setFilteredEvents(filtered);
   }, [events, selectedCategory]);
 
+  // Create a new event
   const createEvent = useCallback(async (eventData: Omit<Event, 'id'>) => {
     setLoading(true);
     setError(null);
@@ -103,6 +108,7 @@ export function useEvents(initialCategory?: EventCategory) {
     }
   }, [events, selectedCategory]);
 
+  // Update an existing event
   const updateEvent = useCallback(async (id: string, eventData: Partial<Event>) => {
     setLoading(true);
     setError(null);
@@ -128,6 +134,7 @@ export function useEvents(initialCategory?: EventCategory) {
     }
   }, []);
 
+  // Delete an event
   const deleteEvent = useCallback(async (id: string) => {
     setLoading(true);
     setError(null);
@@ -148,7 +155,7 @@ export function useEvents(initialCategory?: EventCategory) {
     }
   }, []);
 
-  // Obtener categorías únicas
+  // Get all categories
   const getCategories = useCallback(() => {
     const list = events.map(event => event.category);
     return Array.from(new Set(list));

@@ -9,18 +9,19 @@ import {
   ScrollView,
   ActivityIndicator,
   Alert,
-  useWindowDimensions
+  useWindowDimensions,
+  Image
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { useUser } from "@/hooks/useUser";
 import RoleIndicator from "@/components/RoleIndicator";
-
 export default function ProfileScreen() {
   const router = useRouter();
   const { user, loading, error, updateProfile, logout } = useUser();
   const { width } = useWindowDimensions();
   const isMobile = width < 768;
+  const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
 
   const [name, setName] = useState("");
   const [lastname, setLastname] = useState("");
@@ -85,27 +86,12 @@ export default function ProfileScreen() {
   };
 
   const handleLogout = async () => {
-    Alert.alert(
-      "Logout",
-      "Are you sure you want to logout?",
-      [
-        {
-          text: "Cancel",
-          style: "cancel"
-        },
-        {
-          text: "Logout",
-          onPress: async () => {
-            const success = await logout();
-            if (success) {
-              router.replace("/");
-            } else {
-              Alert.alert("Error", "Failed to logout");
-            }
-          }
-        }
-      ]
-    );
+    const success = await logout();
+    if (success) {
+      router.replace("/");
+    } else {
+      Alert.alert("Error", "Error al cerrar sesion");
+    }
   };
 
   if (loading && !user) {
@@ -120,7 +106,7 @@ export default function ProfileScreen() {
   if (error && !user) {
     return (
       <SafeAreaView style={styles.errorContainer}>
-        <Text style={styles.errorText}>{error}</Text>
+        <Text style={styles.errorText}>Error al cargar el perfil</Text>
         <TouchableOpacity style={styles.errorButton} onPress={handleBack}>
           <Text style={styles.errorButtonText}>Regresar</Text>
         </TouchableOpacity>
@@ -149,9 +135,10 @@ export default function ProfileScreen() {
 
         <View style={styles.profileSection}>
           <View style={styles.avatarContainer}>
-            <Text style={styles.avatarText}>
-              {name.charAt(0).toUpperCase()}{lastname.charAt(0).toUpperCase()}
-            </Text>
+            <Image
+              source={user?.profileImage ? { uri: user.profileImage } : defaultImage}
+              style={{ width: 80, height: 80, borderRadius: 40 }}
+              />
           </View>
           <View style={styles.userInfo}>
             <Text style={styles.userName}>{name} {lastname}</Text>
