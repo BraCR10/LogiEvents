@@ -5,7 +5,7 @@ import React from 'react';
 export default function Header() {
   return (
     <View style={styles.container}>
-      <Navbar isLogged={false} onEventClick={() => {}} />
+      <Navbar isLogged={false} />
       <ImageBackground
         source={require('@/assets/images/fondo_header.webp')} // Asegúrate de que la ruta sea correcta
         style={styles.imageBackground}
