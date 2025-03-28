@@ -62,8 +62,7 @@ function HomeScreen() {
     if (screenWidth > 1400) setNumColumns(6);
     else if (screenWidth > 1100) setNumColumns(4);
     else if (screenWidth > 850) setNumColumns(3);
-    else if (screenWidth > 600) setNumColumns(2);
-    else setNumColumns(1);
+    else setNumColumns(2);
     
     // Set compact view based on real width
     setIsCompactView(screenWidth < 600);
