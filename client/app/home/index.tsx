@@ -7,7 +7,8 @@ import {
   TouchableOpacity, 
   useWindowDimensions, 
   ActivityIndicator,
-  FlatList
+  FlatList,
+  Platform
 } from "react-native";
 import { RelativePathString, useRouter } from "expo-router";
 import ProfileCard from "@/components/ProfileCard";
@@ -29,6 +30,7 @@ function HomeScreen() {
   const [isMobile, setIsMobile] = useState(false);
   const [numColumns, setNumColumns] = useState(2);
   const [isCompactView, setIsCompactView] = useState(false);
+  const [key, setKey] = useState(0);
   const [categories, setCategories] = useState<EventCategory[]>([]);
   
   const {
@@ -45,19 +47,31 @@ function HomeScreen() {
     setSearchQuery
   } = useEvents("Ocio");
 
-  // Responsive layout setup
+  // Responsive layout setup with improved web detection
   useEffect(() => {
-    const isMobileView = width < 768;
+    // Use both current width and innerWidth for web browsers
+    const screenWidth = 
+      Platform.OS === 'web' && typeof window !== 'undefined' 
+        ? Math.min(width, window.innerWidth) 
+        : width;
+    
+    const isMobileView = screenWidth < 768;
     setIsMobile(isMobileView);
     
-    // Set number of columns based on screen width
-    if (width > 1400) setNumColumns(8);
-    else if (width > 1100) setNumColumns(6);
-    else if (width > 850) setNumColumns(4);
-    else setNumColumns(2);
+    // Set columns based on actual screen width
+    if (screenWidth > 1400) setNumColumns(6);
+    else if (screenWidth > 1100) setNumColumns(4);
+    else if (screenWidth > 850) setNumColumns(3);
+    else if (screenWidth > 600) setNumColumns(2);
+    else setNumColumns(1);
     
-    // Set compact view based purely on screen width
-    setIsCompactView(width < 600);
+    // Set compact view based on real width
+    setIsCompactView(screenWidth < 600);
+    
+    // Force layout update when width changes
+    if (Platform.OS === 'web') {
+      setKey(prevKey => prevKey + 1);
+    }
   }, [width]);
   
   useEffect(() => {
@@ -104,12 +118,16 @@ function HomeScreen() {
     else loadAvailableEvents();
   };
 
-  // Render events in grid - updated to depend only on screen size
+  // Render events in grid - improved for web
   const renderEventItem = ({ item }: { item: Event }) => (
     <View 
       style={{
         width: `${100 / numColumns}%`,
-        padding: 1,
+        padding: 8,
+        alignItems: "stretch",
+        flex: 1,
+        flexDirection: "column",
+        maxWidth: `${100 / numColumns}%`,
       }}
     >
       <EventCard 
@@ -182,8 +200,13 @@ function HomeScreen() {
             renderItem={renderEventItem}
             keyExtractor={(item) => item.id}
             numColumns={numColumns}
-            key={`grid-${numColumns}`}
-            contentContainerStyle={styles.gridContainer}
+            key={`grid-${numColumns}-${key}`}
+            contentContainerStyle={{
+              paddingBottom: 20,
+              paddingHorizontal: 0,
+              width: '100%',
+              alignSelf: 'stretch',
+            }}
             showsVerticalScrollIndicator={true}
             indicatorStyle="black"
             scrollIndicatorInsets={{ right: 1 }}
@@ -191,7 +214,13 @@ function HomeScreen() {
             maxToRenderPerBatch={12}
             windowSize={10}
             initialNumToRender={numColumns * 2}
-            columnWrapperStyle={numColumns > 1 ? styles.columnWrapper : undefined}
+            columnWrapperStyle={numColumns > 1 ? {
+              flexDirection: 'row',
+              flexWrap: 'wrap',
+              justifyContent: 'flex-start',
+              alignItems: 'stretch',
+              width: '100%',
+            } : undefined}
           />
         </View>
       )}
@@ -321,6 +350,7 @@ const styles = StyleSheet.create({
   scrollContainer: {
     flex: 1,
     position: 'relative',
+    width: '100%',
   },
   gridContainer: {
     paddingBottom: 20,

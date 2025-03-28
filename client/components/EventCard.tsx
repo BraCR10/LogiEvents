@@ -6,7 +6,7 @@ import type { Event } from "../models/event";
 interface EventCardProps {
   event: Event;
   onPress?: (event: Event) => void;
-  compact?: boolean; // Add compact prop support
+  compact?: boolean;
 }
 
 function EventCard({ event, onPress, compact = false }: EventCardProps) {
@@ -16,7 +16,7 @@ function EventCard({ event, onPress, compact = false }: EventCardProps) {
     }
   };
 
-  const defaultImage = { uri: " https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
+  const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
   
   const containerStyle = compact ? styles.compactContainer : styles.container;
   const contentStyle = compact ? styles.compactCardContent : styles.cardContent;
@@ -49,7 +49,7 @@ function EventCard({ event, onPress, compact = false }: EventCardProps) {
         )}
         
         <Image
-          source={{ uri: event.image }}
+          source={{ uri: event.image || defaultImage.uri }}
           style={imageStyle}
           defaultSource={defaultImage}
         />
@@ -83,7 +83,6 @@ function EventCard({ event, onPress, compact = false }: EventCardProps) {
 }
 
 const styles = StyleSheet.create({
-  // Regular card styles
   container: {
     backgroundColor: "#D9D9D9", 
     borderRadius: 15,
@@ -94,16 +93,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 4,
-    width: 200,
+    width: "100%",
+    maxWidth: 200,
     height: 300,
     marginRight: 16,
+    alignSelf: "stretch",
   },
   cardContent: {
     padding: 10,
     flex: 1,
+    width: "100%",
   },
   dateTimeContainer: {
     marginBottom: 8,
+    width: "100%",
   },
   dateRow: {
     flexDirection: "row",
@@ -135,6 +138,7 @@ const styles = StyleSheet.create({
   infoContainer: {
     marginTop: 10,
     paddingHorizontal: 5,
+    width: "100%",
   },
   title: {
     fontSize: 16,
@@ -147,11 +151,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     marginBottom: 8,
+    flexWrap: "wrap",
   },
   locationText: {
     fontSize: 14,
     marginLeft: 4,
     color: "#333",
+    flex: 1,
   },
   availableSpotsText: {
     fontSize: 12,
@@ -160,7 +166,6 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   
-  // Compact card styles
   compactContainer: {
     backgroundColor: "#D9D9D9", 
     borderRadius: 12,
@@ -173,10 +178,12 @@ const styles = StyleSheet.create({
     elevation: 3,
     width: "100%",
     height: 250,
+    alignSelf: "stretch",
   },
   compactCardContent: {
     padding: 8,
     flex: 1,
+    width: "100%",
   },
   compactDateText: {
     color: "#333",
@@ -207,6 +214,7 @@ const styles = StyleSheet.create({
     fontSize: 12,
     marginLeft: 3,
     color: "#333",
+    flex: 1,
   },
   compactAvailableSpotsText: {
     fontSize: 10,

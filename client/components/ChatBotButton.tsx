@@ -25,7 +25,7 @@ function ChatBotButton() {
     <TouchableOpacity
       style={[
         styles.chatButton,
-        isDarkMode ? styles.chatButtonDark : styles.chatButtonLight
+        styles.chatButtonDark 
       ]}
       onPress={handleChatPress}
       activeOpacity={0.8}
