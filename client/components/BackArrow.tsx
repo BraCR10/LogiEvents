@@ -20,9 +20,9 @@ const BackArrow = ({ onPress }: { onPress: () => void }) => {
 
 const styles = StyleSheet.create({
   container: {
-    position: 'absolute', // Posiciona la flecha de forma independiente
-    top: 10,              // Ajusta la altura desde la parte superior
-    left: 20,             // Ajusta la posición horizontal
+    position: 'absolute', 
+    top: 10,              
+    left: 20,             
     padding: 8,
   },
 });
