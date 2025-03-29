@@ -7,9 +7,9 @@ export default function Header() {
     <View style={styles.container}>
       <Navbar isLogged={false} />
       <ImageBackground
-        source={require('@/assets/images/fondo_header.webp')} // Asegúrate de que la ruta sea correcta
+        source={require('@/assets/images/fondo_header.webp')}
         style={styles.imageBackground}
-        resizeMode="cover" // Cambié a "cover" para eliminar los márgenes blancos
+        resizeMode="cover" 
       >
         <View style={styles.contentContainer}>
           <Text style={styles.title}>Los mejores eventos</Text>
