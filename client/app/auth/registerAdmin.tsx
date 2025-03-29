@@ -71,7 +71,6 @@ export default function RegisterAdmin() {
           </View>
         </View>
 
-        {/* Nuevos campos: Rol de empresa e ID de empresa */}
         <View style={styles.row}>
           <View style={styles.column}>
             <Text style={styles.label4}>Rol de empresa</Text>
@@ -103,7 +102,7 @@ export default function RegisterAdmin() {
 
         <View style={styles.linkContainer}>
           <Text style={styles.linkText}>
-            Ya tienes cuenta?{' '}
+            ¿Ya tienes cuenta?{' '}
             <Text
               style={styles.boldUnderline}
               onPress={() => router.push('/auth/login')} 
@@ -129,7 +128,7 @@ export default function RegisterAdmin() {
               style={styles.rightImage}
               resizeMode="contain"
             />
-            <Text style={styles.organizerTitle}>Cliente?</Text>
+            <Text style={styles.organizerTitle}>¿Cliente?</Text>
             <TouchableOpacity
               style={styles.organizerButton}
               onPress={() => router.push('/auth/register')} 

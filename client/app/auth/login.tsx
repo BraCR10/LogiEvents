@@ -17,91 +17,56 @@ export default function Login() {
         >
           <View style={styles.leftContent}>
             <Text style={styles.leftTitle}>Vive con nosotros</Text>
-            <Text style={styles.leftSubtitle}>Con millones de eventos compartí 
-              experiencias con todos, conseguí tu ticket para los eventos más 
-              próximos y de mejor calidad en LogiEvents
+            <Text style={styles.leftSubtitle}>
+              Millones de eventos, compartí experiencias con todos, conseguí tu ticket para los eventos más próximos y de mejor calidad en{' '}
+              <Text style={styles.bold}>LogiEvents</Text>
             </Text>
           </View>
+          <BackArrow onPress={() => router.back()} />
         </ImageBackground>
       </View>
 
       <View style={styles.rightContainer}>
-        <BackArrow onPress={() => router.back()} />
-        <Text style={styles.title}>LogiEvents</Text>
-        <Text style={styles.subtitle}>Creemos experiencias juntos</Text>
 
-        <Text style={styles.label}>Correo electrónico</Text>
+        <Text style={styles.title}>Inicio de sesión</Text>
+
+        <Text style={styles.label}>Usuario o correo electrónico</Text>
         <TextInput
           style={styles.input}
-          placeholder="name@logievents.com"
-          placeholderTextColor="#A9A9A9"
           keyboardType="email-address"
-        />
-
-        <View style={styles.row}>
-          <View style={styles.column}>
-            <Text style={styles.label2}>Nombre</Text>
-            <TextInput
-              style={styles.inputSmall}
-              placeholder="First Name"
-              placeholderTextColor="#A9A9A9"
-              keyboardType="default"
-            />
-          </View>
-          <View style={styles.column}>
-            <Text style={styles.label3}>Apellido</Text>
-            <TextInput
-              style={styles.inputSmall}
-              placeholder="Last Name"
-              placeholderTextColor="#A9A9A9"
-              keyboardType="default"
-            />
-          </View>
-        </View>
-
-        <Text style={styles.label}>Identificación</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="000000000"
-          placeholderTextColor="#A9A9A9"
-          keyboardType="numeric"
         />
 
         <Text style={styles.label}>Contraseña</Text>
         <TextInput
           style={styles.input}
-          placeholder="Password"
-          placeholderTextColor="#A9A9A9"
           keyboardType="default"
           secureTextEntry={true}
         />
 
-        <View style={styles.row}>
-          <View style={styles.column}>
-            <Text style={styles.label4}>Número</Text>
-            <TextInput
-              style={styles.inputSmall}
-              placeholder="+506 8888 8888"
-              placeholderTextColor="#A9A9A9"
-              keyboardType="numeric"
-            />
-          </View>
+<View style={styles.linkContainer2}>
+          <Text style={styles.linkText2}>
+            ¿Olvidaste tu contraseña?{' '}
+            <Text
+              style={styles.boldUnderline}
+              onPress={() => router.push('/auth/register')} 
+            >
+              Click aquí
+            </Text>
+          </Text>
         </View>
 
-        <Text style={styles.termsText}>
-          Al registrarse acepta nuestros <Text style={styles.boldUnderline}>Términos de uso</Text> y <Text style={styles.boldUnderline}>Políticas de privacidad</Text>.
-        </Text>
-
         <TouchableOpacity style={styles.button} onPress={() => router.push('/home')}>
-          <Text style={styles.buttonText}>Continuar</Text>
+          <Text style={styles.buttonText}>Ir ahora</Text>
         </TouchableOpacity>
+
+
 
         <View style={styles.linkContainer}>
           <Text style={styles.linkText}>
-            Ya tienes cuenta?{' '}
+            ¿No tienes cuenta?{' '}
             <Text
               style={styles.boldUnderline}
-              onPress={() => router.push('/auth/login')} 
+              onPress={() => router.push('/auth/register')} 
             >
               Click aquí
             </Text>
@@ -121,25 +86,28 @@ const styles = StyleSheet.create({
   leftContainer: {
     flex: 1,
   },
-  
-  leftContent: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-  },
 
+  leftContent: {
+    alignItems: 'flex-start', 
+    justifyContent: 'flex-start', 
+    flex: 1,
+    paddingTop: 90, 
+    paddingHorizontal: 60, 
+  },
+  
   leftTitle: {
     color: 'white',
-    fontSize: 36, 
+    fontSize: 36,
     fontWeight: 'bold',
-    marginBottom: 10, 
+    marginBottom: 10,
   },
-
+  
   leftSubtitle: {
     color: 'white',
-    fontSize: 16, 
-    textAlign: 'center',
-    marginBottom: 5, 
+    fontSize: 16,
+    textAlign: 'left',
+    marginBottom: 5,
+    width: '100%', // Asegúrate de que ocupe todo el ancho disponible
   },
 
   leftImage: {
@@ -150,10 +118,10 @@ const styles = StyleSheet.create({
 
   rightContainer: {
     flex: 1,
-    backgroundColor: '#151D20', 
+    backgroundColor: '#FFFFFF', 
     justifyContent: 'flex-start', 
     alignItems: 'center', 
-    paddingTop: 15, 
+    paddingTop: 95, 
   },
   
   image: {
@@ -164,54 +132,23 @@ const styles = StyleSheet.create({
   },
   
   title: {
-    color: 'white',
+    color: 'black',
     fontSize: 40,
     fontWeight: 'bold',
-    marginBottom: 0,
+    marginBottom: 35,
   },
   
-  subtitle: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 25,
-  },
   
   label: {
-    color: 'white',
+    color: 'black',
     fontSize: 16,
     textAlign: 'left',
     alignSelf: 'flex-start', 
     marginLeft: '10%', 
-    marginBottom: 4,
-  },
-  
-  label2: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'left',
-    alignSelf: 'flex-start',
-    marginLeft: '1%',
-    marginBottom: 8,
-  },
-  
-  label3: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'left',
-    alignSelf: 'flex-start',
-    marginLeft: '1%',
-    marginBottom: 8,
-  },
-  
-  label4: {
-    color: 'white',
-    fontSize: 16,
-    textAlign: 'left',
-    alignSelf: 'flex-start',
-    marginLeft: '1%',
     marginBottom: 10,
   },
+  
+
   
   input: {
     width: '80%',
@@ -221,7 +158,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     fontSize: 14, 
     color: 'black', 
-    marginBottom: 5, 
+    marginBottom: 25, 
+    borderWidth: 1,
+    borderColor: 'black',
   },
   
   row: {
@@ -236,39 +175,25 @@ const styles = StyleSheet.create({
     marginHorizontal: 5, 
   },
   
-  inputSmall: {
-    width: '100%', 
-    height: 40,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    paddingHorizontal: 10,
-    fontSize: 14,
-    color: 'black',
-    marginBottom: 6,
+  bold: {
+    fontWeight: 'bold', 
   },
   
   button: {
-    backgroundColor: 'white',
+    backgroundColor: 'black',
     paddingVertical: 8,
     paddingHorizontal: 80,
     borderRadius: 20,
-    marginTop: 20,
+    marginTop: 50,
   },
   
   buttonText: {
-    color: 'black',
+    color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
   },
   
-  termsText: {
-    color: 'white',
-    fontSize: 12,
-    textAlign: 'center',
-    marginTop: 20,
-    marginBottom: 20,
-    width: '80%',
-  },
+
   
   boldUnderline: {
     fontWeight: 'bold',
@@ -282,9 +207,24 @@ const styles = StyleSheet.create({
   },
   
   linkText: {
-    color: 'white',
+    color: 'color',
     fontSize: 12,
     textAlign: 'center',
     textDecorationLine: 'underline', 
   },
+
+  linkContainer2: {
+    marginTop: -15, 
+    alignItems: 'flex-end', 
+    width: '80%',
+  },
+
+  linkText2: {
+    color: 'color',
+    fontSize: 12,
+    textAlign: 'right',
+    textDecorationLine: 'underline', 
+  },
+
+  
 });

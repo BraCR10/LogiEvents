@@ -83,7 +83,7 @@ export default function Register() {
 
         <View style={styles.linkContainer}>
           <Text style={styles.linkText}>
-            Ya tienes cuenta?{' '}
+            ¿Ya tienes cuenta?{' '}
             <Text
               style={styles.boldUnderline}
               onPress={() => router.push('/auth/login')} 

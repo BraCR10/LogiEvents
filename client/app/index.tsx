@@ -1,8 +1,12 @@
 import { StyleSheet, View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import Navbar from '@/components/Navbar';
 import React from 'react';
+import { useRouter } from "expo-router";
+
 
 export default function Header() {
+    const router = useRouter(); 
+  
   return (
     <View style={styles.container}>
       <Navbar isLogged={false} />
@@ -17,7 +21,10 @@ export default function Header() {
             A tan solo un click de <Text style={styles.bold}>una nueva experiencia</Text>
           </Text>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Ir ahora</Text>
+            <Text style={styles.buttonText}
+              onPress={() => router.push('/auth/login')} 
+
+            >Ir ahora</Text>
           </TouchableOpacity>
         </View>
       </ImageBackground>
