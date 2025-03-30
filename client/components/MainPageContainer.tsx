@@ -25,7 +25,7 @@ interface MainPageContainerProps {
   showChatButton?: boolean;
 }
 
-const MainPageContainer: React.FC<MainPageContainerProps> = ({
+function MainPageContainer({
   children,
   style,
   contentContainerStyle,
@@ -33,7 +33,7 @@ const MainPageContainer: React.FC<MainPageContainerProps> = ({
   showFooter = true,
   showNavbar = true,
   showChatButton = true,
-}) => {
+}: MainPageContainerProps) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollbarStyles />
