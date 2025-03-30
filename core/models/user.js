@@ -28,6 +28,18 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    businessID: {
+        type: String,
+        required: false
+    },
+    DNI: {
+        type: String,
+        required: false
+    },
+    address: {
+        type: String,
+        required: false
+    },
     verified: {
         type: Boolean,
         required: true,

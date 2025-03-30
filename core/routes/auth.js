@@ -25,10 +25,10 @@ const { sendVerificationCode } = require('../services/smsService');
 router.post('/register', async (req, res) => {
    
    try {
-        const check = ['firstName', 'lastName', 'email', 'password', 'phoneNumber'];
+        const check = ['firstName', 'lastName', 'email', 'password', 'phoneNumber', 'businessID', 'DNI', 'address'];
         bodyHandler(check, req.body);
 
-        const { firstName, lastName, email, password, phoneNumber } = req.body;
+        const { firstName, lastName, email, password, phoneNumber, businessID, DNI, address } = req.body;
 
         // Check if the user already exists
         const user = await User.findOne({ email });
@@ -43,6 +43,30 @@ router.post('/register', async (req, res) => {
             throw new Error('Password is not strong enough');
         }
 
+        // Validate DNI
+        const dniRegex = new RegExp("^[0-9]{8}[A-Z]$");
+        if (!dniRegex.test(DNI)){
+            throw new Error('DNI is not valid');
+        }
+
+        // Validate phone number
+        const phoneRegex = new RegExp("^[0-9]{10}$");
+        if (!phoneRegex.test(phoneNumber)){
+            throw new Error('Phone number is not valid');
+        }
+
+        // Validate business ID (4 letter, 4 numbers)
+        const businessIDRegex = new RegExp("^[A-Z]{4}[0-9]{4}$");
+        if (!businessIDRegex.test(businessID)){
+            throw new Error('Business ID is not valid');
+        }
+
+        // Validate mail
+        const emailRegex = new RegExp("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+        if (!emailRegex.test(email)){
+            throw new Error('Email is not valid');
+        }
+
         const hashedPassword = await bcryptjs.hash(password, 10);
         const newUser = new User({
             firstName,
@@ -50,6 +74,9 @@ router.post('/register', async (req, res) => {
             email,
             password: hashedPassword,
             phoneNumber,
+            businessID,
+            DNI,
+            address
             
         });
 
