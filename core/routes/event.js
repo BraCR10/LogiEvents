@@ -9,6 +9,8 @@ const sendEmail = require('../handlers/sendEmail');
 const Ticket = require('../models/ticket');
 const OTP = require('../models/otp');
 const crypto = require('crypto');
+const Media = require('../models/media');
+const upload = require('../middlewares/multer');
 
 
 
@@ -18,39 +20,47 @@ const requireAuth = passport.authenticate('jwt', { session: false });
 const { sendAdminCode, sendVerificationCode } = require('../services/smsService');
 const { sendEmail } = require('../handlers/sendEmail');
 
-// Create a new event
-router.post('/', requireAuth, bodyHandler, async (req, res) => {
+router.post('/', requireAuth, upload.array('images', 5), bodyHandler, async (req, res) => {
     try {
-        const { name, date, location, description, price, ticketType, images, tags, capacity } = req.body;
+        const { name, date, location, description, price, ticketType, tags, capacity } = req.body;
+        
         const user = await User.findById(req.user._id);
-
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        
+
         if (user.role !== 'admin') {
             return res.status(403).json({ error: 'You do not have permission to update this event' });
         }
         
-        // Validate event date (Should be in the future + have day, hour, minute)
         const eventDate = new Date(date);
         const currentDate = new Date();
         if (eventDate <= currentDate) {
             return res.status(400).json({ error: 'Event date must be in the future' });
         }
-        
-        // Validate capacity
+
         if (capacity <= 0) {
             return res.status(400).json({ error: 'Capacity must be greater than 0' });
         }
 
-        // Validate price
         if (price < 0) {
             return res.status(400).json({ error: 'Price must be greater than or equal to 0' });
         }
 
+        let imageUrls = [];
+        if (req.files) {
+            for (let file of req.files) {
+                const media = new Media({
+                    title: file.originalname,
+                    url: file.path,
+                    type: 'image'
+                });
+                await media.save();
+                imageUrls.push(media._id);
+            }
+        }
 
-        const event = new Event({ name, date, location, description, price, ticketType, images, tags, capacity });
+        const event = new Event({ name, date, location, description, price, ticketType, images: imageUrls, tags, capacity });
         await event.save();
         res.status(201).json(event);
     } catch (error) {
@@ -58,6 +68,7 @@ router.post('/', requireAuth, bodyHandler, async (req, res) => {
     }
 });
 
+module.exports = router;
 // Get all events
 router.get('/', async (req, res) => {
     try {

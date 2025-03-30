@@ -8,7 +8,7 @@ const EventSchema = new mongoose.Schema({
     description: { type: String, required: true },
     price: { type: Number, required: true },
     ticketType: { type: String, required: true },
-    images: [{ type: String }],
+    images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Media' }],
     tags: [{ type: String }],
     attendees: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     capacity: { type: Number, required: true },

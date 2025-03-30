@@ -49,7 +49,12 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         default: 'user'
-    }
+    },
+    profilePicture: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Media',
+        required: false
+    },
 });
 
 module.exports = mongoose.model('User', UserSchema);
