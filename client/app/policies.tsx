@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import Navbar from "@/components/Navbar";
 import ScrollbarStyles from "@/components/ScrollbarStyles";
+import MainPageContainer from '@/components/MainPageContainer';
 
 export default function Policies() {
   const router = useRouter();
@@ -57,41 +57,42 @@ export default function Policies() {
   ];
 
   return (
-    <SafeAreaView style={styles.container}>
-      <ScrollbarStyles />
-      <Navbar isLogged={false} />
-      
-      <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
-        <View style={[styles.content, !isMobile && styles.desktopContent]}>
-          <View style={styles.header}>
-            <Ionicons 
-              name="arrow-back" 
-              size={24} 
-              color="#333" 
-              onPress={() => router.back()} 
-              style={styles.backIcon}
-            />
-            <Text style={styles.mainTitle}>Términos y Condiciones</Text>
-          </View>
-
-          <View style={styles.termsContainer}>
-            <Text style={styles.lastUpdated}>Última actualización: 20 de Marzo, 2025</Text>
-            
-            {sections.map((section, index) => (
-              <View key={index} style={styles.section}>
-                {index > 0 && <Text style={styles.sectionTitle}>{section.title}</Text>}
-                <Text style={styles.sectionContent}>{section.content}</Text>
+    <MainPageContainer isAuthenticated={false} showNavbar={false}>
+        <SafeAreaView style={styles.container}>
+          <ScrollbarStyles />
+          
+          <ScrollView style={styles.scrollView} contentContainerStyle={styles.contentContainer}>
+            <View style={[styles.content, !isMobile && styles.desktopContent]}>
+              <View style={styles.header}>
+                <Ionicons 
+                  name="arrow-back" 
+                  size={24} 
+                  color="#333" 
+                  onPress={() => router.back()} 
+                  style={styles.backIcon}
+                />
+                <Text style={styles.mainTitle}>Términos y Condiciones</Text>
               </View>
-            ))}
-            
-            <Text style={styles.footer}>
-              Al utilizar LogiEvents, confirmas que has leído, entendido y aceptado estos Términos y Condiciones.
-            </Text>
-          </View>
-        </View>
-      </ScrollView>
-    
-    </SafeAreaView>
+
+              <View style={styles.termsContainer}>
+                <Text style={styles.lastUpdated}>Última actualización: 20 de Marzo, 2025</Text>
+                
+                {sections.map((section, index) => (
+                  <View key={index} style={styles.section}>
+                    {index > 0 && <Text style={styles.sectionTitle}>{section.title}</Text>}
+                    <Text style={styles.sectionContent}>{section.content}</Text>
+                  </View>
+                ))}
+                
+                <Text style={styles.footer}>
+                  Al utilizar LogiEvents, confirmas que has leído, entendido y aceptado estos Términos y Condiciones.
+                </Text>
+              </View>
+            </View>
+          </ScrollView>
+        
+        </SafeAreaView>
+      </MainPageContainer>
   );
 }
 
