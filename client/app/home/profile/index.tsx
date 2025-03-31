@@ -32,7 +32,7 @@ export default function ProfileScreen() {
   
   // Derived values
   const isMobile = width < 768;
-  const defaultImage = { uri: "https://www.kasandbox.org/programming-images/avatars/leaf-blue.png" };
+  const defaultImage = { uri: "https://ui-avatars.com/api/?name="+name+lastname };
 
   // Load user data on component mount
   useEffect(() => {
