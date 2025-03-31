@@ -48,7 +48,7 @@ export default function Login() {
             ¿Olvidaste tu contraseña?{' '}
             <Text
               style={styles.boldUnderline}
-              onPress={() => router.push('/auth/register')} 
+              onPress={() => router.push('/auth/requestPassword')} 
             >
               Click aquí
             </Text>
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'left',
     marginBottom: 5,
-    width: '100%', // Asegúrate de que ocupe todo el ancho disponible
+    width: '100%', 
   },
 
   leftImage: {
