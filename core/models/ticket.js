@@ -28,3 +28,6 @@ const TicketSchema = new Schema({
 }, {
     timestamps: true,
 });
+
+const Ticket = mongoose.model('Ticket', TicketSchema);
+module.exports = Ticket;

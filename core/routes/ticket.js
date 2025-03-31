@@ -39,3 +39,4 @@ router.get('/event/:eventId', requireAuth, async (req, res) => {
     }
 });
 
+module.exports = router;
