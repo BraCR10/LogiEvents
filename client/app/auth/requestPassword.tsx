@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import BackArrow from "@/components/BackArrow";
 import { useRouter } from "expo-router";
-import ConfirmationPopup from "@/components/RequestPasswordPopUp";
+import RequestPopUp from "@/components/RequestPasswordPopUp";
 
 export default function RequestPassword() {
   const router = useRouter();
@@ -20,12 +20,12 @@ export default function RequestPassword() {
   const [popupVisible, setPopupVisible] = useState(false);
 
   const handleConfirmPasswordChange = () => {
-    setPopupVisible(true); // Muestra el popup
+    setPopupVisible(true); 
   };
 
   const handleClosePopup = () => {
-    setPopupVisible(false); // Cierra el popup
-    router.push("/auth/confirmPassword"); // Navega a la siguiente pantalla
+    setPopupVisible(false); 
+    router.push("/auth/confirmPassword"); 
   };
 
   return (
@@ -55,10 +55,10 @@ export default function RequestPassword() {
       </ImageBackground>
 
       {/* Popup */}
-      <ConfirmationPopup
+      <RequestPopUp
         visible={popupVisible}
         onClose={handleClosePopup}
-        message="Tu solicitud de cambio de contraseña ha sido enviada."
+        message="Hemos enviado un correo con las instrucciones para cambiar tu contraseña."
       />
     </View>
   );

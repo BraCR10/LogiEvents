@@ -8,13 +8,13 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-interface RequestPopUpProps {
+interface ConfirmationPasswordProps {
   visible: boolean;
   onClose: () => void;
   message: string;
 }
 
-export default function RequestPopUp({ visible, onClose, message }: RequestPopUpProps) {
+export default function ConfirmationPassword({ visible, onClose, message }: ConfirmationPasswordProps) {
   const { width } = useWindowDimensions();
   const isMobile = width < 768;
 
@@ -29,7 +29,7 @@ export default function RequestPopUp({ visible, onClose, message }: RequestPopUp
         <View style={[styles.popupContainer, isMobile && styles.mobilePopup]}>
           <Text style={styles.message}>{message}</Text>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>Continuar</Text>
+            <Text style={styles.closeButtonText}>Volver a Inicio Sesión</Text>
           </TouchableOpacity>
         </View>
       </View>
