@@ -11,7 +11,7 @@ app.use(express.json());
 // Load routers
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
-const eventRouter = require('./routes/event');
+const eventRouter = require('./routes/event.js');
 const chatRouter = require('./routes/chatbot');
 const ticketRouter = require('./routes/ticket');
 
@@ -24,6 +24,9 @@ mongoose.connect(process.env.DATABASE_URL, {
 .then(() => console.log('Database succesfully connected.'))
 .catch(err => console.log(err));
 
+// Made the public route for media files
+app.use('/public', express.static('public'));
+app.use('/uploads', express.static('uploads'));
 
 app.use(`/auth`, authRouter);
 app.use(`/user`, userRouter);
