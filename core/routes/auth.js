@@ -52,9 +52,9 @@ router.post('/register', upload.single('profilePicture'), async (req, res) => {
         }
 
         // Phone number validation (10 digits)
-        const phoneRegex = new RegExp("^[0-9]{10}$");
+        const phoneRegex = new RegExp("^[0-9]{12}$");
         if (!phoneRegex.test(phoneNumber)) {
-            throw new Error('Phone number must be 10 digits');
+            throw new Error('Phone number must be 12 digits');
         }
 
         // Business ID validation (4 letters + 4 numbers)
