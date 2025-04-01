@@ -34,9 +34,10 @@ app.use(`/event`, eventRouter);
 app.use(`/chat`, chatRouter);
 app.use(`/ticket`, ticketRouter);
 
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-}); 
-
+if (require.main === module) {
+    app.listen(PORT, () => {
+      console.log(`Server running on port ${PORT}`);
+    });
+  }
 
 module.exports = app;
